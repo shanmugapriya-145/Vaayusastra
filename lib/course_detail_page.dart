@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'payment_page.dart'; // Import PaymentPage
 import 'course.dart'; // Assuming 'Course' class is defined in 'course.dart'
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher for opening links
 
 class CourseDetailPage extends StatelessWidget {
-  final Course course; // Corrected to use 'Course' class
+  final Course course;
 
   CourseDetailPage({required this.course});
 
@@ -43,6 +44,28 @@ class CourseDetailPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
+            Text(
+              'Drive Link:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                _openDriveLink(course.driveLink);
+              },
+              child: Text(
+                course.driveLink,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.lightBlueAccent,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -73,5 +96,13 @@ class CourseDetailPage extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => PaymentPage()),
     );
+  }
+
+  void _openDriveLink(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

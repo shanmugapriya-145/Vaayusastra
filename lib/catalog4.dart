@@ -17,16 +17,19 @@ class _Catalog4DetailPageState extends State<Catalog4DetailPage> {
       name: 'Data Science Fundamentals',
       description:
           'Learn the basics of data science, including data analysis, machine learning, statistical modeling, and data visualization.',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
     Course(
       name: 'Big Data Technologies',
       description:
           'Explore big data technologies, including Hadoop, Spark, and data processing frameworks for large-scale data analysis.',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
     Course(
       name: 'Cloud Computing and DevOps',
       description:
           'Master cloud computing and DevOps principles, including AWS, Azure, Docker, Kubernetes, and continuous integration/continuous deployment (CI/CD).',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
   ];
 

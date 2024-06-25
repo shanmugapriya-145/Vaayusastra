@@ -17,16 +17,19 @@ class _Catalog2DetailPageState extends State<Catalog2DetailPage> {
       name: 'Software Engineering Principles',
       description:
           'Learn the fundamental principles of software engineering, including software development methodologies and best practices.',
+      driveLink: 'https://drive.google.com/drive/folders/example1',
     ),
     Course(
       name: 'Web Development Fundamentals',
       description:
           'Explore the basics of web development, including HTML, CSS, JavaScript, and frameworks like React and Angular.',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
     Course(
       name: 'Mobile App Development',
       description:
           'Master mobile app development with Flutter and Dart, including UI design, state management, and app deployment.',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
   ];
 

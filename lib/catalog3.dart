@@ -17,16 +17,19 @@ class _Catalog3DetailPageState extends State<Catalog3DetailPage> {
       name: 'Business Administration Essentials',
       description:
           'Learn essential business skills, including management, marketing, finance, and strategic planning.',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
     Course(
       name: 'Entrepreneurship and Innovation',
       description:
           'Explore entrepreneurship and innovation, including idea generation, startup funding, and business development.',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
     Course(
       name: 'Digital Marketing Strategies',
       description:
           'Master digital marketing strategies, including SEO, social media marketing, content creation, and analytics.',
+      driveLink: 'https://drive.google.com/drive/folders/example2',
     ),
   ];
 

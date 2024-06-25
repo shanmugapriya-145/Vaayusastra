@@ -17,16 +17,19 @@ class _Catalog1DetailPageState extends State<Catalog1DetailPage> {
       name: 'Aerospace Engineering Fundamentals',
       description:
           'Explore the basics of aerospace engineering, focusing on principles of flight, aerodynamics, and spacecraft design.',
+      driveLink: 'https://drive.google.com/drive/folders/example1', // Add drive link
     ),
     Course(
       name: 'Advanced Aircraft Design',
       description:
           'Master the art of designing advanced aircraft and spacecraft, including materials, structures, and propulsion systems.',
+      driveLink: 'https://drive.google.com/drive/folders/example2', // Add drive link
     ),
     Course(
       name: 'Space Mission Planning and Management',
       description:
           'Learn about planning, managing, and executing space missions, including satellite launches and space exploration.',
+      driveLink: 'https://drive.google.com/drive/folders/example3', // Add drive link
     ),
   ];
 

@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    var url = Uri.parse('http://localhost:3000/login');
+    var url = Uri.parse('http://192.168.1.142:3000/login'); // Replace with your IP address
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'email': email, 'password': password}));
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      var url = Uri.parse('http://localhost:3000/google-login');
+      var url = Uri.parse('http://192.168.1.142:3000/google-login'); // Replace with your IP address
       var response = await http.post(url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode({'idToken': googleAuth.idToken}));

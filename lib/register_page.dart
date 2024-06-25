@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
@@ -47,33 +47,40 @@ class _RegisterPageState extends State<RegisterPage> {
     String confirmPassword = _confirmPasswordController.text;
     String phoneNumber = _phoneNumberController.text;
 
+    // Validate password match
     if (password != confirmPassword) {
       _showSnackBar(context, 'Passwords do not match');
       return;
     }
 
-    var url = Uri.parse('http://localhost:3000/register');
+    // HTTP POST request to register user
+    var url = Uri.parse('http://192.168.1.142:3000/register'); // Replace with your server's IP
     try {
-      var response = await http.post(url,
-          headers: {'Content-Type': 'application/json'},
-          body: json.encode({
-            'name': name,
-            'email': email,
-            'dob': dob,
-            'password': password,
-            'phoneNumber': phoneNumber,
-          }));
+      var response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'name': name,
+          'email': email,
+          'dob': dob,
+          'password': password,
+          'phoneNumber': phoneNumber,
+        }),
+      );
 
       if (response.statusCode == 200) {
+        // Successful registration, navigate to login page
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
       } else {
+        // Registration failed, show error message
         var jsonResponse = json.decode(response.body);
         _showSnackBar(context, jsonResponse['message']);
       }
     } catch (e) {
+      // Exception occurred during registration
       print('Error registering user: $e');
       _showSnackBar(context, 'An error occurred while registering. Please try again later.');
     }
@@ -86,6 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _navigateToLogin() {
+    // Navigate to login page
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => LoginPage()),
@@ -98,6 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
+        title: Text('Register'),
       ),
       body: Center(
         child: SingleChildScrollView(

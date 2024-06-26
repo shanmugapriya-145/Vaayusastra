@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'splash_screen.dart'; // Import SplashScreenWidget
+// ignore: unused_import
+import "splash_screen.dart"; // Import SplashScreenWidget
 import 'login_page.dart'; // Import LoginPage
 import 'home_page.dart'; // Import HomePage
 import 'onboarding_screen.dart'; // Import OnboardingScreen

@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home_page.dart'; // Import HomePage
-import 'register_page.dart'; // Import the RegisterPage
+import 'package:google_fonts/google_fonts.dart';
+import 'home_page.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus(); // Check login status on initialization
+    _checkLoginStatus();
   }
 
   Future<void> _checkLoginStatus() async {
@@ -32,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
     if (isLoggedIn) {
-      // If user is logged in, navigate to HomePage
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
@@ -47,10 +47,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', false); // Clear login state
-
-    _googleSignIn.signOut(); // Sign out from Google Sign-In
-
+    await prefs.setBool('isLoggedIn', false);
+    _googleSignIn.signOut();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginPage()),
@@ -61,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    var url = Uri.parse('http://192.168.1.142:3000/login'); // Replace with your IP address
+    var url = Uri.parse('http://192.168.1.6:3000/login');
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'email': email, 'password': password}));
@@ -87,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      var url = Uri.parse('http://192.168.1.142:3000/google-login'); // Replace with your IP address
+      var url = Uri.parse('http://192.168.1.6:3000/google-login');
       var response = await http.post(url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode({'idToken': googleAuth.idToken}));
@@ -115,115 +113,151 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
-      body: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 32,
-                  color: Colors.blue[900],
-                  fontFamily: 'OleoScript',
-                  fontWeight: FontWeight.bold,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue[300]!, Colors.blue[900]!],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ClipOval(
+                  child: Image.asset(
+                    'assets/splash.jpg',
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              SizedBox(height: 30),
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.white,
+                SizedBox(height: 20),
+                Text(
+                  'Welcome Back!',
+                  style: GoogleFonts.raleway(
+                    fontSize: 32,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _passwordController,
-                obscureText: !_isPasswordVisible,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.white,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.grey,
+                SizedBox(height: 10),
+                Text(
+                  'Please sign in to continue',
+                  style: GoogleFonts.raleway(
+                    fontSize: 18,
+                    color: Colors.white70,
+                  ),
+                ),
+                SizedBox(height: 30),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.white),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
+                    filled: true,
+                    fillColor: Colors.blue[700]!.withOpacity(0.5),
+                  ),
+                  style: TextStyle(color: Colors.white),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: !_isPasswordVisible,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.white),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    filled: true,
+                    fillColor: Colors.blue[700]!.withOpacity(0.5),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _login,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 50),
+                    backgroundColor: Colors.blue[700],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _login,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                SizedBox(height: 10),
+                OutlinedButton(
+                  onPressed: _loginWithGoogle,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.account_circle, color: Colors.white),
+                        SizedBox(width: 10),
+                        Text(
+                          'Sign in with Google',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 50),
+                    side: BorderSide(color: Colors.white),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  backgroundColor: Colors.blue[900],
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-              ),
-              SizedBox(height: 10),
-              OutlinedButton(
-                onPressed: _loginWithGoogle,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.account_circle, color: Colors.blue[900]),
-                      SizedBox(width: 10),
-                      Text(
-                        'Sign in with Google',
-                        style: TextStyle(fontSize: 16, color: Colors.blue[900]),
+                SizedBox(height: 10),
+                RichText(
+                  text: TextSpan(
+                    text: "Don't have an account? ",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Register now',
+                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RegisterPage()),
+                            );
+                          },
                       ),
                     ],
                   ),
                 ),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  side: BorderSide(color: Colors.blue[900]!),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-              ),
-              SizedBox(height: 10),
-              RichText(
-                text: TextSpan(
-                  text: "Don't have an account? ",
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Register now',
-                      style: TextStyle(color: Colors.blue[900], fontSize: 16),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => RegisterPage()),
-                          );
-                        },
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

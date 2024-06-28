@@ -26,6 +26,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
     if (onboardingComplete) {
       _checkLoginState();
     } else {
+    
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => OnboardingScreen()),
